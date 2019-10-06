@@ -28,7 +28,7 @@
         <configuration>
           <archive>
             <manifest>
-              <mainClass>net.pierre.monrocq.App</mainClass>
+              <mainClass>net.pierre.monrocq.Main</mainClass>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib</classpathPrefix>
             </manifest>

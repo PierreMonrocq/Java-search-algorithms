@@ -1,13 +1,36 @@
 package net.pierre.monrocq.graphs;
 
-public class Vertex {
+import java.io.Serializable;
+
+public class Vertex implements Serializable{
 	
-	private int label;//this is the id, maybe later consider adding a "real" label
+	private static final long serialVersionUID = 1L;
+	private int id;//this is the id, maybe later consider adding a "real" label
 	private int cost;
+	private String label;
 	
-	public Vertex(int label) {
-		this.label = label;
+	public Vertex(int id) {
+		this.id = id;
 		this.cost = -1;
+		this.label = "";
+	}
+	
+	public Vertex(int id,int cost) {
+		this.id = id;
+		this.cost = cost;
+		this.label = "";
+	}
+	
+	public Vertex(int id,int cost, String label) {
+		this.id = id;
+		this.cost = cost;
+		this.label = label;
+	}
+	
+	public Vertex(int id,String label) {
+		this.id = id;
+		this.cost = -1;
+		this.label = label;
 	}
 	
 	@Override //make 2 object with same label equal
@@ -15,12 +38,12 @@ public class Vertex {
 		if(obj == null) return false;
 		if(!(obj instanceof Vertex)) return false;
 		if(obj == this) return true;
-		return this.getLabel() == ((Vertex) obj).getLabel();
+		return this.getId() == ((Vertex) obj).getId();
 	}
 
 	@Override //make 2 objects with same label have the same hashcode
 	public int hashCode() {
-		return label;
+		return id;
 	}
 	
 	public void setCost(int cost) {
@@ -31,13 +54,24 @@ public class Vertex {
 		return cost;
 	}
 	
-	public int getLabel() {
-		return label;
+	public int getId() {
+		return id;
 	}
 	
 	@Override
 	public String toString() {
-		return this.cost == -1 ? String.valueOf(label) : String.valueOf(label) + " cost: " + String.valueOf(cost);
+		if(this.label == "") {
+			return this.cost == -1 ? String.valueOf(id) : String.valueOf(id) + " cost: " + String.valueOf(cost);
+	}
+		return this.cost == -1 ? this.label : this.label + " cost: " + String.valueOf(cost);
+	}
+	
+	public String getLabel() {
+		return label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
 	}
 	
 	
