@@ -126,7 +126,7 @@ public class Graph implements Serializable{
 		}
 	}
 	
-	public Graph load(String path){
+	public static Graph load(String path){
 		try {
 			FileInputStream fileInputStream = new FileInputStream(new File(path));
 			ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
@@ -134,6 +134,7 @@ public class Graph implements Serializable{
 			Graph graph = (Graph) objectInputStream.readObject();
 			objectInputStream.close();
 			fileInputStream.close();
+			
 			return graph;
 		}catch(FileNotFoundException e) {
 			System.out.println("File not found");
