@@ -12,13 +12,13 @@ public class Vertex implements Serializable{
 	public Vertex(int id) {
 		this.id = id;
 		this.cost = -1;
-		this.label = "";
+		this.label = String.valueOf(id);
 	}
 	
 	public Vertex(int id,int cost) {
 		this.id = id;
 		this.cost = cost;
-		this.label = "";
+		this.label = String.valueOf(id);
 	}
 	
 	public Vertex(int id,int cost, String label) {
@@ -60,10 +60,11 @@ public class Vertex implements Serializable{
 	
 	@Override
 	public String toString() {
-		if(this.label == "") {
-			return this.cost == -1 ? String.valueOf(id) : String.valueOf(id) + " cost: " + String.valueOf(cost);
-	}
-		return this.cost == -1 ? this.label : this.label + " cost: " + String.valueOf(cost);
+		if(this.label.length() != 0) {
+			return this.cost != -1 ? this.label + " cost: " + this.cost : this.label;
+		}
+		return this.cost != -1 ? String.valueOf(id) + " cost: " + this.cost : String.valueOf(id);
+		
 	}
 	
 	public String getLabel() {

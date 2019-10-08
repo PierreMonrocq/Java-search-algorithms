@@ -147,8 +147,8 @@ public class Graph implements Serializable{
 		return null;
 	}
 	
-	public List<Vertex> getAdjacentVertices(int label){
-		return adjacencyVertices.get(new Vertex(label));
+	public List<Vertex> getAdjacentVertices(int id){
+		return adjacencyVertices.get(new Vertex(id));
 	}
 	
 	@Override

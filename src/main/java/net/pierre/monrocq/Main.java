@@ -1,7 +1,11 @@
 package net.pierre.monrocq;
 
+import java.util.Set;
 
+import net.pierre.monrocq.algorithms.BreadthFirst;
+import net.pierre.monrocq.algorithms.DepthFirst;
 import net.pierre.monrocq.graphs.Graph;
+import net.pierre.monrocq.graphs.Vertex;
 
 public class Main {
 	
@@ -16,6 +20,25 @@ public class Main {
 
 		Graph roumanie = Graph.load("roumanie.txt");
 		
-		System.out.println(roumanie.getAdjacentVertices(0));
+		//DepthFirst depthFirst = new DepthFirst(roumanie);
+		
+		//Set<Vertex> solution = depthFirst.search(ARAD, ORADEA);
+		
+		BreadthFirst breadthFirst = new BreadthFirst(roumanie);
+		
+		Set<Vertex> solution2 = breadthFirst.search(ARAD, BUCHAREST);
+		
+		System.out.println(solution2);
+	}
+	
+	public static void showPath(Set<Vertex> solution) {
+		StringBuilder builder = new StringBuilder();
+		int totalCost = 0;
+		for(Vertex v: solution) {
+			builder.append(v.getId()+ " ");
+			totalCost += v.getCost();
+		}
+		builder.append("total cost: "+ totalCost);
+		System.out.println(builder.toString());
 	}
 }

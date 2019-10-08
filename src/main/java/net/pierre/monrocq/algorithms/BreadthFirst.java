@@ -36,5 +36,31 @@ public class BreadthFirst {
 	    }
 	    return visited;
 	}
+	
+	public Set<Vertex> search(int root, int goal){
+		Set<Vertex> explored = new LinkedHashSet<Vertex>();
+		Vertex rootVertex = new Vertex(root);
+		Vertex goalVertex = new Vertex(goal);
+		explored.add(rootVertex);
+		if(rootVertex.equals(goalVertex)) {
+			return explored;
+		}
+	    Queue<Vertex> frontier = new LinkedList<Vertex>();
+	    frontier.add(rootVertex);
+	    while (!frontier.isEmpty()) {
+	        Vertex node = frontier.poll();
+	        explored.add(node);
+	        for (Vertex child : this.g.getAdjacentVertices(node.getId())) {
+	        	if(!frontier.contains(child) && !explored.contains(child)) {
+	    			if(child.equals(goalVertex)) {
+	    				explored.add(child);
+	    				return explored;
+	    			}
+	    			frontier.add(child);
+	        	}
+	        }
+	    }
+	    return null;
+	}
 
 }
