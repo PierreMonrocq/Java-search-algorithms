@@ -9,61 +9,69 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-
-import java.util.EnumSet;
 
 
 
 public class Graph implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private Map<Vertex, List<Vertex>> adjacencyVertices;
-	private Map<String, Integer> enumVariableIdentifier;
+	private Map<Node, List<Node>> adjacencyVertices;
+	//private Map<String, Integer> enumVariableIdentifier;
 
 	public Graph() {//Create empty graph
-		this.adjacencyVertices = new HashMap<Vertex, List<Vertex>>();
+		this.adjacencyVertices = new HashMap<Node, List<Node>>();
 	}
 	
-	public Graph(int... labels) {//Create a graph directly with integers
-		this.adjacencyVertices = new HashMap<Vertex, List<Vertex>>();
-		for(int label : labels) {
-			this.addVertex(new Vertex(label));
+	public Graph(String... labels) {//Create a graph directly with integers
+		this.adjacencyVertices = new HashMap<Node, List<Node>>();
+		for(String label : labels) {
+			this.addNode(label);
 		}
 	}
 	
-	public <E extends Enum<E>> Graph(Class<E> eClass) {//Create a graph with enums
-		this.adjacencyVertices = new HashMap<Vertex, List<Vertex>>();
-		this.enumVariableIdentifier = new HashMap<String, Integer>();
-		Object[] list = EnumSet.allOf(eClass).toArray();
-		for(int i=0;i<list.length;i++) {
-			String label = list[i].toString();
-			Vertex v = new Vertex(i,label);
-			this.addVertex(v);
-			this.enumVariableIdentifier.put(label, i);
+	public Graph(Node[] nodes, Edge[] edges) {
+		this.adjacencyVertices = new HashMap<Node, List<Node>>();
+		for(Node node : nodes) {
+			this.addNode(node);
 		}
-    }
-	
-	public void addVertex(Vertex vertex) {//Add a vertex object to the graph
-		adjacencyVertices.putIfAbsent(vertex, new ArrayList<Vertex>());
+		for(Edge e : edges) {
+			addEdge(e.getSrc(), e.getDest(), e.getCost());
+		}
 	}
 	
-	public void addIdAsVertex(int id) {//Create an integer to the graph
-		adjacencyVertices.putIfAbsent(new Vertex(id), new ArrayList<Vertex>());
+	public void addNode(String label) {
+		adjacencyVertices.putIfAbsent(new Node(label), new ArrayList<Node>());
+	}
+
+	public void addNode(Node node) {//Add a node object to the graph
+		adjacencyVertices.putIfAbsent(node, new ArrayList<Node>());
 	}
 	
-	public void removeVertex(int vertex) {
-		Vertex v1 = new Vertex(vertex);
+	
+	public void removeNode(String label) {
+		Node v1 = new Node(label);
 		adjacencyVertices.values().stream().forEach(e->e.remove(v1));
-		adjacencyVertices.remove(new Vertex(vertex));
+		adjacencyVertices.remove(new Node(label));
 	}
 	
-	public void addEdge(int src, int dest, Integer... cost) {
-		Vertex vertex1 = new Vertex(src);
-		Vertex vertex2 = new Vertex(dest);
+	
+	public <E extends Enum<E>> Graph(Class<E> eClass) {
+		Object[] list = EnumSet.allOf(eClass).toArray();
+		for(Object o : list) {
+			String label = o.toString();
+			Node n = new Node(label);
+			this.addNode(n);
+		}
+		
+	}
+	
+	public void addEdge(String src, String dest, Integer... cost) {
+		Node vertex1 = new Node(src);
+		Node vertex2 = new Node(dest);
 		if(cost.length != 0) {
 			vertex1.setCost(cost[0]);
 			vertex2.setCost(cost[0]);
@@ -72,40 +80,32 @@ public class Graph implements Serializable{
 		adjacencyVertices.get(vertex2).add(vertex1);
 	}
 	
-	public void addOrientedEdge(int src, int dest, Integer... cost) {
-		Vertex vertex1 = new Vertex(src);
-		Vertex vertex2 = new Vertex(dest);
+	public void addOrientedEdge(String src, String dest, Integer... cost) {
+		Node vertex1 = new Node(src);
+		Node vertex2 = new Node(dest);
 		if(cost.length != 0) {
 			vertex1.setCost(cost[0]);
 		}
 		adjacencyVertices.get(vertex1).add(vertex2);
 	}
 	
-	public <E extends Enum<E>> void addEdgeFromEnum(E e1, E e2, Integer... cost){
-		int id1 = this.enumVariableIdentifier.get(e1.toString());
-		int id2 = this.enumVariableIdentifier.get(e2.toString());
-		Vertex vertex1 = new Vertex(id1);
-		vertex1.setLabel(e1.toString());
-		Vertex vertex2 = new Vertex(id2);
-		vertex2.setLabel(e2.toString());
-		if(cost.length != 0) {
-			vertex1.setCost(cost[0]);
-			vertex2.setCost(cost[0]);
+	
+	public void addAllEdges(Edge[] edges) {
+		for(Edge e : edges) {
+			addEdge(e.getSrc(), e.getDest(), e.getCost());
 		}
-		adjacencyVertices.get(vertex1).add(vertex2);
-		adjacencyVertices.get(vertex2).add(vertex1);
 	}
 	
-	public void removeEdge(int label1, int label2) {
-		Vertex vertex1 = new Vertex(label1);
-		Vertex vertex2 = new Vertex(label2);
-		List<Vertex> edge1 = adjacencyVertices.get(vertex1);
-		List<Vertex> edge2 = adjacencyVertices.get(vertex2);
+	public void removeEdge(String label1, String label2) {
+		Node node1 = new Node(label1);
+		Node node2 = new Node(label2);
+		List<Node> edge1 = adjacencyVertices.get(node1);
+		List<Node> edge2 = adjacencyVertices.get(node2);
 		if(edge1 != null) {
-			edge1.remove(vertex2);
+			edge1.remove(node2);
 		}
 		if(edge2 != null) {
-			edge2.remove(vertex1);
+			edge2.remove(node1);
 		}	
 	}
 	
@@ -147,8 +147,8 @@ public class Graph implements Serializable{
 		return null;
 	}
 	
-	public List<Vertex> getAdjacentVertices(int id){
-		return adjacencyVertices.get(new Vertex(id));
+	public List<Node> getAdjacentVertices(String label){
+		return adjacencyVertices.get(new Node(label));
 	}
 	
 	@Override

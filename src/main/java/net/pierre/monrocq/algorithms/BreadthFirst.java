@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import net.pierre.monrocq.graphs.Graph;
-import net.pierre.monrocq.graphs.Vertex;
+import net.pierre.monrocq.graphs.Node;
 
 public class BreadthFirst {
 	
@@ -16,18 +16,15 @@ public class BreadthFirst {
 		this.g = g;
 	}
 	
-	public Set<Vertex> traversal(int root, String...strings){
-		Vertex rootVertex = new Vertex(root);
-		if(strings.length != 0) {
-			rootVertex.setLabel(strings[0]);
-		}
-		Set<Vertex> visited = new LinkedHashSet<Vertex>();
-	    Queue<Vertex> queue = new LinkedList<Vertex>();
+	public Set<Node> traversal(String root){
+		Node rootVertex = new Node(root);
+		Set<Node> visited = new LinkedHashSet<Node>();
+	    Queue<Node> queue = new LinkedList<Node>();
 	    queue.add(rootVertex);
 	    visited.add(rootVertex);
 	    while (!queue.isEmpty()) {
-	        Vertex firstVertex = queue.poll();
-	        for (Vertex v : this.g.getAdjacentVertices(firstVertex.getId())) {
+	        Node firstVertex = queue.poll();
+	        for (Node v : this.g.getAdjacentVertices(firstVertex.getLabel())) {
 	            if (!visited.contains(v)) {
 	                visited.add(v);
 	                queue.add(v);
@@ -37,20 +34,20 @@ public class BreadthFirst {
 	    return visited;
 	}
 	
-	public Set<Vertex> search(int root, int goal){
-		Set<Vertex> explored = new LinkedHashSet<Vertex>();
-		Vertex rootVertex = new Vertex(root);
-		Vertex goalVertex = new Vertex(goal);
+	public Set<Node> search(String root, String goal){
+		Set<Node> explored = new LinkedHashSet<Node>();
+		Node rootVertex = new Node(root);
+		Node goalVertex = new Node(goal);
 		explored.add(rootVertex);
 		if(rootVertex.equals(goalVertex)) {
 			return explored;
 		}
-	    Queue<Vertex> frontier = new LinkedList<Vertex>();
+	    Queue<Node> frontier = new LinkedList<Node>();
 	    frontier.add(rootVertex);
 	    while (!frontier.isEmpty()) {
-	        Vertex node = frontier.poll();
+	        Node node = frontier.poll();
 	        explored.add(node);
-	        for (Vertex child : this.g.getAdjacentVertices(node.getId())) {
+	        for (Node child : this.g.getAdjacentVertices(node.getLabel())) {
 	        	if(!frontier.contains(child) && !explored.contains(child)) {
 	    			if(child.equals(goalVertex)) {
 	    				explored.add(child);

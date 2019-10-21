@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import net.pierre.monrocq.graphs.Graph;
-import net.pierre.monrocq.graphs.Vertex;
+import net.pierre.monrocq.graphs.Node;
 
 public class DepthFirst {
 
@@ -15,16 +15,16 @@ public class DepthFirst {
 		this.g = g;
 	}
 	
-	public Set<Vertex> traversal(int root) {
-		Vertex rootVertex = new Vertex(root);
-	    Set<Vertex> visited = new LinkedHashSet<Vertex>();
-	    Stack<Vertex> stack = new Stack<Vertex>();
+	public Set<Node> traversal(String root) {
+		Node rootVertex = new Node(root);
+	    Set<Node> visited = new LinkedHashSet<Node>();
+	    Stack<Node> stack = new Stack<Node>();
 	    stack.push(rootVertex);
 	    while (!stack.isEmpty()) {
-	        Vertex vertex = stack.pop();
+	        Node vertex = stack.pop();
 	        if (!visited.contains(vertex)) {
 	            visited.add(vertex);
-	            for (Vertex v : this.g.getAdjacentVertices(vertex.getId())) {              
+	            for (Node v : this.g.getAdjacentVertices(vertex.getLabel())) {              
 	                stack.push(v);
 	            }
 	        }
@@ -32,21 +32,21 @@ public class DepthFirst {
 	    return visited;
 	}
 	
-	public Set<Vertex> search(int root, int goal){
-		Set<Vertex> explored = new LinkedHashSet<Vertex>();
-		Vertex rootVertex = new Vertex(root);
-		Vertex goalVertex = new Vertex(goal);
+	public Set<Node> search(String root, String goal){
+		Set<Node> explored = new LinkedHashSet<Node>();
+		Node rootVertex = new Node(root);
+		Node goalVertex = new Node(goal);
 		explored.add(rootVertex);
 		if(rootVertex.equals(goalVertex)) {
 			return explored;
 		}
-	    Stack<Vertex> frontier = new Stack<Vertex>();
+	    Stack<Node> frontier = new Stack<Node>();
 	    frontier.push(rootVertex);
 	    
 	    while(!frontier.isEmpty()) {
-	    	Vertex vertex = frontier.pop();
+	    	Node vertex = frontier.pop();
 	    	explored.add(vertex);
-	    	for(Vertex v: this.g.getAdjacentVertices(vertex.getId())) {
+	    	for(Node v: this.g.getAdjacentVertices(vertex.getLabel())) {
 	    		if(!frontier.contains(v) && !explored.contains(v)) {
 	    			frontier.push(v);
 	    			if(v.equals(goalVertex)) {
