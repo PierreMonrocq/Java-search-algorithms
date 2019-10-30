@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -20,23 +21,22 @@ public class Graph implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private Map<Node, List<Node>> adjacencyVertices;
-	//private Map<String, Integer> enumVariableIdentifier;
-
+	
 	public Graph() {//Create empty graph
 		this.adjacencyVertices = new HashMap<Node, List<Node>>();
 	}
 	
-	public Graph(String... labels) {//Create a graph directly with integers
+	public Graph(String... labels) {
 		this.adjacencyVertices = new HashMap<Node, List<Node>>();
 		for(String label : labels) {
 			this.addNode(label);
 		}
 	}
 	
-	public Graph(Node[] nodes, Edge[] edges) {
+	public Graph(ArrayList<Node> nodes, ArrayList<Edge> edges) {
 		this.adjacencyVertices = new HashMap<Node, List<Node>>();
 		for(Node node : nodes) {
-			this.addNode(node);
+			addNode(node);
 		}
 		for(Edge e : edges) {
 			addEdge(e.getSrc(), e.getDest(), e.getCost());
@@ -146,6 +146,8 @@ public class Graph implements Serializable{
 		}
 		return null;
 	}
+	
+
 	
 	public List<Node> getAdjacentVertices(String label){
 		return adjacencyVertices.get(new Node(label));

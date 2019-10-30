@@ -1,7 +1,10 @@
 package net.pierre.monrocq.graphs;
 
-public class Edge {
+import java.io.Serializable;
 
+public class Edge implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private String src;
 	private String dest;
 	private int cost;

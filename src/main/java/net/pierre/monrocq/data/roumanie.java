@@ -16,7 +16,7 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 				GIURGIU, URZICENI, EFORIE, VASLUI, IASI, NEAMT, HIRSOVA;
 	
 		private static final ArrayList<Edge> edges;
-		private static ArrayList<String> labels = new ArrayList<String>();
+		private static ArrayList<Node> labels = new ArrayList<Node>();
 		
 		static {
 			Edge[] _edges = new Edge[]{
@@ -32,8 +32,9 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 					 ,new Edge(CRAIOVA,RIMNICU_VILCEA,146)
 					 ,new Edge(CRAIOVA,PITESTI,138)
 					 ,new Edge(PITESTI,BUCHAREST,101)
+					 ,new Edge(RIMNICU_VILCEA,PITESTI,97)
 					 ,new Edge(RIMNICU_VILCEA,SIBIU,80)
-					 ,new Edge(SIBIU,FAGARAS,90)
+					 ,new Edge(SIBIU,FAGARAS,99)
 					 ,new Edge(FAGARAS,BUCHAREST,211)
 					 ,new Edge(BUCHAREST,GIURGIU,90)
 					 ,new Edge(BUCHAREST,URZICENI,85)
@@ -46,7 +47,7 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 			edges = new ArrayList<Edge>();
 			edges.addAll(Arrays.asList(_edges));
 			for(roumanie r : roumanie.values()) {
-				labels.add(r.name());
+				labels.add(new Node(r.name()));
 			}
 			
 		}
@@ -55,7 +56,7 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 			return edges;
 		}
 
-		public static ArrayList<String> getLabels() {
+		public static ArrayList<Node> getLabels() {
 			return labels;
 		}
 		

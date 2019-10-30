@@ -1,12 +1,8 @@
 package net.pierre.monrocq.algorithms;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 
 import net.pierre.monrocq.graphs.Graph;
@@ -22,31 +18,30 @@ public class UniformCost {
 	
 	
 	public List<Node> search(String root, String goal){
-		List<Node> path = new ArrayList<Node>();
 		Node rootNode = new Node(root);
 		Node goalNode = new Node(goal);
-		Set<Node> explored = new LinkedHashSet<Node>();
+		Set<Node> explored = new HashSet<Node>();
 		PriorityQueue<Node> frontier = new PriorityQueue<Node>();
 		frontier.add(rootNode);
 		while (!frontier.isEmpty()) {
-			 path.clear();
-			 Node node = frontier.poll();
-			 if(node.equals(goalNode)) {
-				 return path;
+			
+			 Node current = frontier.poll();
+			 explored.add(current);
+			 if(current.equals(goalNode)) {
+				 return current.showPath();
 			 }
-			 explored.add(node);
-			 path.add(node);//ADD node parent
-			 for (Node child : this.g.getAdjacentVertices(node.getLabel())) {
+			 
+			 for (Node child : this.g.getAdjacentVertices(current.getLabel())) {
+				 child.setCost(current.getCost()+child.getCost());
+				 
 				 if(!frontier.contains(child) && !explored.contains(child)) {
+					 child.setParent(current);
 					 frontier.add(child);
 				 }
-				 else if(frontier.contains(child)) {
-					 for(Node v : frontier) {
-						 if(v.equals(child) && v.getCost() < child.getCost()) {
-							 frontier.remove(v);
-							 frontier.add(child);
-						 }
-					 }
+				 else if((frontier.contains(child))&&(child.getCost()>(current.getCost()))) {
+					 child.setParent(current);
+					 frontier.remove(child);
+					 frontier.add(child);
 				 }
 			 }
         }
