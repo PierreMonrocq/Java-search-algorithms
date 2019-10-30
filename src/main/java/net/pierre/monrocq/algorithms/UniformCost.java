@@ -16,7 +16,6 @@ public class UniformCost {
 		this.g = g;
 	}
 	
-	
 	public List<Node> search(String root, String goal){
 		Node rootNode = new Node(root);
 		Node goalNode = new Node(goal);

@@ -1,6 +1,8 @@
 package net.pierre.monrocq.algorithms;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Stack;
 
@@ -32,26 +34,30 @@ public class DepthFirst {
 	    return visited;
 	}
 	
-	public Set<Node> search(String root, String goal){
+	public List<Node> search(String root, String goal){
 		Set<Node> explored = new LinkedHashSet<Node>();
 		Node rootVertex = new Node(root);
 		Node goalVertex = new Node(goal);
 		explored.add(rootVertex);
 		if(rootVertex.equals(goalVertex)) {
-			return explored;
+			List<Node> res = new ArrayList<Node>();
+			res.add(rootVertex);
+			return res;
 		}
 	    Stack<Node> frontier = new Stack<Node>();
 	    frontier.push(rootVertex);
 	    
 	    while(!frontier.isEmpty()) {
-	    	Node vertex = frontier.pop();
-	    	explored.add(vertex);
-	    	for(Node v: this.g.getAdjacentVertices(vertex.getLabel())) {
-	    		if(!frontier.contains(v) && !explored.contains(v)) {
-	    			frontier.push(v);
-	    			if(v.equals(goalVertex)) {
-	    				explored.add(v);
-	    				return explored;
+	    	Node node = frontier.pop();
+	    	explored.add(node);
+	    	for(Node child: this.g.getAdjacentVertices(node.getLabel())) {
+	    		if(!frontier.contains(child) && !explored.contains(child)) {
+	    			frontier.push(child);
+	    			child.setParent(node);
+	        		child.setCost(node.getCost()+child.getCost());//to update cost for each node
+	    			if(child.equals(goalVertex)) {
+	    				explored.add(child);
+	    				return child.showPath();
 	    			}
 	    			
 	    		}

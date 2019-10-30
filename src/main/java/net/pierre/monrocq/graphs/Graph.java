@@ -9,7 +9,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
@@ -151,6 +150,10 @@ public class Graph implements Serializable{
 	
 	public List<Node> getAdjacentVertices(String label){
 		return adjacencyVertices.get(new Node(label));
+	}
+	
+	public Map<Node, List<Node>> getAdjacencyVertices() {
+		return adjacencyVertices;
 	}
 	
 	@Override
