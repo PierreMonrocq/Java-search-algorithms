@@ -4,20 +4,16 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
-public class MaximumSpanTree {
-
-	private ArrayList<Node> n1;
-	private ArrayList<Node> n2;
+public class MaximumSpanTree extends Graph{
 	
-	public MaximumSpanTree(Map<Node, Node> parents) {
-		n1 = new ArrayList<Node>();
-		n2 = new ArrayList<Node>();
-		for (Map.Entry<Node, Node> entry : parents.entrySet()) {
-            Node k = entry.getKey();
-            Node v = entry.getValue();
-            n1.add(k);
-            n2.add(v);
-        }
+	private static final long serialVersionUID = 1L;
+
+	public MaximumSpanTree() {//TODO create a MST from nodes and edges
+		super();
+	}
+	
+	public MaximumSpanTree(ArrayList<Node> nodes, ArrayList<Edge> edges) {
+		super(nodes, edges);
 	}
 	
 }

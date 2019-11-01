@@ -146,6 +146,14 @@ public class Graph implements Serializable{
 		return null;
 	}
 	
+	public ArrayList<Node> getGraphNodes(){
+		ArrayList<Node> res = new ArrayList<Node>();
+		for (Map.Entry<Node, List<Node>> entry : this.getAdjacencyVertices().entrySet()) {
+			res.add(entry.getKey());
+		}
+		return res;
+	}
+	
 
 	
 	public List<Node> getAdjacentVertices(String label){

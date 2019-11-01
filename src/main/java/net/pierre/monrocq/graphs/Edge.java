@@ -2,7 +2,7 @@ package net.pierre.monrocq.graphs;
 
 import java.io.Serializable;
 
-public class Edge implements Serializable {
+public class Edge implements Serializable, Comparable<Edge> {
 
 	private static final long serialVersionUID = 1L;
 	private String src;
@@ -45,4 +45,10 @@ public class Edge implements Serializable {
 	public String toString() {
 		return src + " -> " + dest + " :" + cost;
 	}
+
+	@Override
+	public int compareTo(Edge o) {
+		return this.cost - o.getCost();
+	}
+	
 }
