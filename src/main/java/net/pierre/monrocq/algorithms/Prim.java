@@ -61,7 +61,7 @@ public class Prim {
 		}
 		return new MaximumSpanTree(nodes,mst);
 	}
-	public static Node findMinKey( Map<Node, Integer> values ,Map<Node, Boolean> notIncludedNodes) {
+	public static Node findMinKey( Map<Node, Integer> values, Map<Node, Boolean> notIncludedNodes) {
 		int min = Integer.MAX_VALUE;
 		Node minNode = null;
 		for(Node n : values.keySet()) {

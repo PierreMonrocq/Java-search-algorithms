@@ -154,7 +154,12 @@ public class Graph implements Serializable{
 		return res;
 	}
 	
-
+	public Graph setNodeHeuristic(HashMap<Node, Integer> heuristic) {
+		for(Node n : adjacencyVertices.keySet()) {
+			n.setHeuristicCost(heuristic.get(n));
+		}
+		return this;
+	}
 	
 	public List<Node> getAdjacentVertices(String label){
 		return adjacencyVertices.get(new Node(label));

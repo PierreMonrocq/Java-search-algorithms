@@ -16,7 +16,8 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 				GIURGIU, URZICENI, EFORIE, VASLUI, IASI, NEAMT, HIRSOVA;
 	
 		private static final ArrayList<Edge> edges;
-		private static ArrayList<Node> labels = new ArrayList<Node>();
+		private static final ArrayList<Node> labels = new ArrayList<Node>();
+		private static final HashMap<Node, Integer> flyDistanceToBucarest = new HashMap<Node, Integer>();
 		
 		static {
 			Edge[] _edges = new Edge[]{
@@ -50,6 +51,32 @@ public enum roumanie {//Modelisation des villes de la Roumanie
 				labels.add(new Node(r.name()));
 			}
 			
+		}
+		static {
+			flyDistanceToBucarest.put(new Node(ARAD.name()), 366);
+			flyDistanceToBucarest.put(new Node(BUCHAREST.name()), 0);
+			flyDistanceToBucarest.put(new Node(CRAIOVA.name()), 160);
+			flyDistanceToBucarest.put(new Node(DROBETA.name()), 242);
+			flyDistanceToBucarest.put(new Node(EFORIE.name()), 161);
+			flyDistanceToBucarest.put(new Node(FAGARAS.name()), 176);
+			flyDistanceToBucarest.put(new Node(GIURGIU.name()), 77);
+			flyDistanceToBucarest.put(new Node(HIRSOVA.name()), 151);
+			flyDistanceToBucarest.put(new Node(IASI.name()), 226);
+			flyDistanceToBucarest.put(new Node(LUGOJ.name()), 244);
+			flyDistanceToBucarest.put(new Node(MEHADIA.name()), 241);
+			flyDistanceToBucarest.put(new Node(NEAMT.name()), 234);
+			flyDistanceToBucarest.put(new Node(ORADEA.name()), 380);
+			flyDistanceToBucarest.put(new Node(PITESTI.name()), 100);
+			flyDistanceToBucarest.put(new Node(RIMNICU_VILCEA.name()), 193);
+			flyDistanceToBucarest.put(new Node(SIBIU.name()), 253);
+			flyDistanceToBucarest.put(new Node(TIMISOARA.name()), 329);
+			flyDistanceToBucarest.put(new Node(URZICENI.name()), 80);
+			flyDistanceToBucarest.put(new Node(VASLUI.name()), 199);
+			flyDistanceToBucarest.put(new Node(ZERIND.name()), 374);
+		}
+		
+		public static HashMap<Node, Integer> getFlydistancetobucarest() {
+			return flyDistanceToBucarest;
 		}
 		
 		public static ArrayList<Edge> getEdges() {

@@ -12,6 +12,7 @@ public class Node implements Serializable, Comparable<Node>{
 	private int cost;
 	private final String label;
 	private Node parent;
+	private int heuristicCost = 0;
 	
 	public Node(String label) {
 		this.label = label;
@@ -22,7 +23,6 @@ public class Node implements Serializable, Comparable<Node>{
 		this.label = label;
 		this.cost = cost;
 	}
-	
 	
 	@Override //make 2 object with same label equal
 	public boolean equals(Object obj) {
@@ -54,13 +54,6 @@ public class Node implements Serializable, Comparable<Node>{
 	public String getLabel() {
 		return label;
 	}
-	
-	Comparator<Node> vertexComparator = new Comparator<Node>() {
-        @Override
-        public int compare(Node v1, Node v2) {
-            return v1.getCost() - v2.getCost();
-        }
-    };
 
 	@Override
 	public int compareTo(Node o) {
@@ -70,6 +63,15 @@ public class Node implements Serializable, Comparable<Node>{
 	public void setParent(Node parent) {
 		this.parent = parent;
 	}
+	
+	public void setHeuristicCost(int heuristicCost) {
+		this.heuristicCost = heuristicCost;
+	}
+	
+	public int getHeuristicCost() {
+		return heuristicCost;
+	}
+	
 	
 	public Node getParent() {
 		return parent;
