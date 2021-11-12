@@ -2,13 +2,9 @@ package net.pierre.monrocq;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import net.pierre.monrocq.algorithms.BellmanFord;
-import net.pierre.monrocq.algorithms.GreedyBestFirst;
-import net.pierre.monrocq.algorithms.Prim;
-import net.pierre.monrocq.algorithms.UniformCost;
+import net.pierre.monrocq.algorithms.Astar;
+import net.pierre.monrocq.algorithms.BreadthFirst;
 import net.pierre.monrocq.data.roumanie;
 import net.pierre.monrocq.graphs.Edge;
 import net.pierre.monrocq.graphs.Graph;
@@ -23,19 +19,23 @@ public class Main {
 		
 		Graph g = new Graph(labels,roumanieEdges);
 		System.out.println(g);
-		UniformCost uniformCost = new UniformCost(g);
+		
 		//BreadthFirst breadthFirst = new BreadthFirst(g);
 		//DepthFirst df = new DepthFirst(g);
 		//System.out.println(df.search(roumanie.ARAD.name(), roumanie.BUCHAREST.name()));
 		//Prim p = new Prim(g);
 		//System.out.println(uniformCost.search(roumanie.ARAD.name(), roumanie.BUCHAREST.name()));
 		
-		GreedyBestFirst greedyBestFirst = new GreedyBestFirst(g);
+		HashMap<Node, Integer> heuristic = roumanie.getFlydistancetobucarest();
 		
-		//distance vol oiseau
-		HashMap<Node, Integer> flydist = roumanie.getFlydistancetobucarest();
+		Astar astar = new Astar(g);
+		System.out.println(astar.search(roumanie.ARAD.name(), roumanie.BUCHAREST.name(), heuristic));
 		
-		System.out.println(greedyBestFirst.search(roumanie.ARAD.name(), roumanie.BUCHAREST.name(), flydist));
+		BreadthFirst bfs = new BreadthFirst(g);
+		System.out.println(bfs.search(roumanie.ARAD.name(), roumanie.BUCHAREST.name()));
+		
+				
+		
 		
 		
 	}
